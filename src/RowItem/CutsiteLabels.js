@@ -15,6 +15,7 @@ function CutsiteLabels(props) {
     onClick,
     onRightClick,
     textWidth = 10,
+    labelLinesAlwaysOn = true,
     editorName
   } = props;
   if (annotationRanges.length === 0) {
@@ -78,6 +79,7 @@ function CutsiteLabels(props) {
           onClick,
           onRightClick,
           height,
+          labelLinesAlwaysOn,
           xStart
         }}
       />
@@ -122,6 +124,7 @@ const DrawCutsiteLabel = withHover(
     xStartOriginal,
     onMouseLeave,
     onMouseOver,
+    labelLinesAlwaysOn = false,
     xStart
   }) => {
     return (
@@ -153,18 +156,19 @@ const DrawCutsiteLabel = withHover(
         >
           {annotation.restrictionEnzyme.name}
         </div>
-        {hovered && (
+        {
           <div
             style={{
               position: "absolute",
               left: xStartOriginal,
               bottom: 0,
               height: Math.max(height, 3),
-              width: 2,
+              width: hovered ? 2 : labelLinesAlwaysOn ? 1 : 0,
+              opacity: hovered ? 1 : labelLinesAlwaysOn ? 0.3 : 0,
               background: "black"
             }}
           />
-        )}
+        }
       </div>
     );
   }
